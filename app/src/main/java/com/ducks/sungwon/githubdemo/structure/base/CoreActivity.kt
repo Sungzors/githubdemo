@@ -1,27 +1,17 @@
 package com.ducks.sungwon.githubdemo.structure.base
 
-import android.annotation.SuppressLint
-import android.app.ListFragment
-import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.support.annotation.ColorRes
 import android.support.annotation.IdRes
 import android.support.annotation.LayoutRes
 import android.support.annotation.StringRes
-import android.support.v4.app.ActivityCompat.finishAffinity
-import android.support.v4.app.Fragment
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.Toolbar
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
-import com.ducks.sungwon.githubdemo.R
-import java.util.ArrayList
+import kotlinx.android.synthetic.main.view_progress.*
+import kotlinx.android.synthetic.main.view_toolbar.*
+import java.util.*
 
 abstract class CoreActivity : AppCompatActivity() {
     /*Properties*/
@@ -41,6 +31,7 @@ abstract class CoreActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
         setContentView(layoutId())
+        setSupportActionBar(toolbar)
     }
 
     /*Toolbar*/
@@ -49,7 +40,7 @@ abstract class CoreActivity : AppCompatActivity() {
     }
 
     fun setToolbarTitle(title: String) {
-        toolbar_title.text = title
+        toolbar.title = title
     }
 
     /*Navigation*/
@@ -61,11 +52,11 @@ abstract class CoreActivity : AppCompatActivity() {
 
     /*Progress Dialog*/
     fun showProgress() {
-        progress.visibility = View.VISIBLE
+        progress_view.visibility = View.VISIBLE
     }
 
     fun hideProgress() {
-        progress.visibility = View.GONE
+        progress_view.visibility = View.GONE
     }
 
 //    /*Fragment Control*/
