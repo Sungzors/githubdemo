@@ -24,6 +24,7 @@ class RepoListActivity : CoreActivity(){
         super.onCreate(savedInstanceState)
 
         showProgress()
+        //initiate once per app call for list
         mRepoManager = RepoManager.instance
         mRepoManager.getRepoList {
             if(it){
@@ -51,6 +52,7 @@ class RepoListActivity : CoreActivity(){
         super.onStop()
     }
 
+    //recycler for the main list
     fun setUpRecycler(list: ArrayList<Repo>){
         mAdapter = RepoListAdapter(list, context){
             //TODO: setup intent
