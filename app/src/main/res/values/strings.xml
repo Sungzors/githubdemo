@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GitHubDemo</string>
+    <string name="public_repositories">Public Repositories:</string>
+    <string name="image_of_user">Image of User</string>
 </resources>
