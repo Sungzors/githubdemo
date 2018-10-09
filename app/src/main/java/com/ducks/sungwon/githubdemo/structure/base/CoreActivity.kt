@@ -1,5 +1,6 @@
 package com.ducks.sungwon.githubdemo.structure.base
 
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.support.annotation.IdRes
@@ -26,6 +27,9 @@ abstract class CoreActivity : AppCompatActivity() {
     //Return 0 for activity with no container
     @IdRes
     protected abstract fun contentContainerId(): Int
+
+    val context: Context
+        get() = this
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

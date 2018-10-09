@@ -12,7 +12,7 @@ import com.ducks.sungwon.githubdemo.R
 import com.ducks.sungwon.githubdemo.model.Repo
 import com.squareup.picasso.Picasso
 
-class RepoListAdapter private constructor(list : ArrayList<Repo>, context : Context, onClick: (Int) -> Unit) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
+class RepoListAdapter(list : ArrayList<Repo>, context : Context, onClick: (Int) -> Unit) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
 
     private val mRecyclerList = list
     private val mContext = context
