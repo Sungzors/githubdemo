@@ -6,15 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.ducks.sungwon.githubdemo.R
 import com.ducks.sungwon.githubdemo.model.Repo
 import com.squareup.picasso.Picasso
 
-class RepoListAdapter private constructor(list : ArrayList<Repo>, context : Context) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
+class RepoListAdapter private constructor(list : ArrayList<Repo>, context : Context, onClick: (Int) -> Unit) : RecyclerView.Adapter<RepoListAdapter.ViewHolder>() {
 
     private val mRecyclerList = list
     private val mContext = context
+    private val mClick = onClick
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RepoListAdapter.ViewHolder =
             ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.card_repo_detailed, parent, false))
@@ -32,9 +34,14 @@ class RepoListAdapter private constructor(list : ArrayList<Repo>, context : Cont
         mRecyclerList[pos].description?.let {
             viewHolder.description.text = it
         }
+
+        viewHolder.container.setOnClickListener {
+            mClick(pos)
+        }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var container : LinearLayout = itemView.findViewById(R.id.crd_container)
         var image : ImageView = itemView.findViewById(R.id.cpn_image)
         var name : TextView = itemView.findViewById(R.id.cpn_name)
         var title : TextView = itemView.findViewById(R.id.crd_title)
