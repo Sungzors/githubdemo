@@ -23,7 +23,9 @@ class RepoManager {
 
     fun getRepoList(callback: (Boolean) -> Unit){
         val call = Rest.instance.getCaller().getRepo(
-                Constants.Tokens.token,
+                Constants.Tokens.token
+        )
+        call.enqueue(
                 object : Callback<ArrayList<RepoResponse>>{
                     override fun onResponse(call: Call<ArrayList<RepoResponse>>?, response: Response<ArrayList<RepoResponse>>?) {
                         val finalList = mutableListOf<Repo>()

@@ -22,6 +22,7 @@ class RepoListActivity : CoreActivity(){
     //lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         showProgress()
         mRepoManager = RepoManager.instance
         mRepoManager.getRepoList {

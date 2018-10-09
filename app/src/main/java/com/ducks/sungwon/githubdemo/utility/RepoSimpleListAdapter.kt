@@ -38,6 +38,6 @@ class RepoSimpleListAdapter(list : ArrayList<Repo>, context : Context, onClick: 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var container : LinearLayout = itemView.findViewById(R.id.cpn_container)
         var image : ImageView = itemView.findViewById(R.id.cpn_image)
-        var title : TextView = itemView.findViewById(R.id.cpn_text)
+        var title : TextView = itemView.findViewById(R.id.cpn_name)
     }
 }
