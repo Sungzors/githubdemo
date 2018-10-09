@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.support.annotation.RequiresApi
 import android.support.v7.widget.LinearLayoutManager
+import android.view.KeyEvent
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -22,7 +23,6 @@ import com.ducks.sungwon.githubdemo.utility.RepoSimpleListAdapter
 import kotlinx.android.synthetic.main.activity_repoview.*
 
 
-
 class RepoViewActivity: CoreActivity(){
     override fun layoutId(): Int = R.layout.activity_repoview
 
@@ -34,7 +34,7 @@ class RepoViewActivity: CoreActivity(){
     //lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        showBackArrow(R.drawable.ic_back)
+        showBackArrow(R.drawable.ic_back)
         mRepoManager = RepoManager.instance
         setUpRecycler(mRepoManager.mRepoList!!)
         setUpWebView(mRepoManager.mRepoList!![intent.getIntExtra(Constants.IntentKeys.REPO_ID, 1)].html_url!!)
@@ -85,6 +85,17 @@ class RepoViewActivity: CoreActivity(){
         arv_webview.settings.loadsImagesAutomatically = true
         arv_webview.settings.javaScriptEnabled = true
         arv_webview.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
+        arv_webview.setOnKeyListener({v, keyCode, event ->
+            if (event.action == KeyEvent.ACTION_DOWN) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_BACK -> if (arv_webview.canGoBack()) {
+                        arv_webview.goBack()
+                        return@setOnKeyListener true
+                    }
+                }
+            }
+            return@setOnKeyListener false
+        })
         arv_webview.setDownloadListener({ url, userAgent, contentDisposition, mimeType, contentLength ->
             val request = DownloadManager.Request(
                     Uri.parse(url))
@@ -104,13 +115,5 @@ class RepoViewActivity: CoreActivity(){
     //param: url of the page to load
     fun loadWebView(url: String){
         arv_webview.loadUrl(url)
-    }
-
-    override fun onBackPressed() {
-        if(arv_webview.canGoBack()){
-            arv_webview.goBack()
-        } else {
-            super.onBackPressed()
-        }
     }
 }
