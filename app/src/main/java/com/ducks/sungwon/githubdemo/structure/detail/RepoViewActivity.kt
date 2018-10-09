@@ -17,8 +17,8 @@ import com.ducks.sungwon.githubdemo.R
 import com.ducks.sungwon.githubdemo.manager.RepoManager
 import com.ducks.sungwon.githubdemo.model.Repo
 import com.ducks.sungwon.githubdemo.structure.base.CoreActivity
+import com.ducks.sungwon.githubdemo.utility.Constants
 import com.ducks.sungwon.githubdemo.utility.RepoSimpleListAdapter
-import kotlinx.android.synthetic.main.activity_repolist.*
 import kotlinx.android.synthetic.main.activity_repoview.*
 
 
@@ -34,9 +34,10 @@ class RepoViewActivity: CoreActivity(){
     //lifecycle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        showBackArrow(R.drawable.ic_back)
+//        showBackArrow(R.drawable.ic_back)
         mRepoManager = RepoManager.instance
-
+        setUpRecycler(mRepoManager.mRepoList!!)
+        setUpWebView(mRepoManager.mRepoList!![intent.getIntExtra(Constants.IntentKeys.REPO_ID, 1)].html_url!!)
     }
 
     override fun onStart() {
@@ -58,11 +59,11 @@ class RepoViewActivity: CoreActivity(){
     //recycler for the concise repo list scrolling horizontally
     fun setUpRecycler(list: ArrayList<Repo>){
         mAdapter = RepoSimpleListAdapter(list, context){
-
+            loadWebView(mRepoManager.mRepoList!![it].html_url!!)
         }
-        arl_recycler.setHasFixedSize(true)
-        arl_recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        arl_recycler.adapter = mAdapter
+        arv_recycler.setHasFixedSize(true)
+        arv_recycler.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        arv_recycler.adapter = mAdapter
         hideProgress()
     }
 
@@ -103,5 +104,13 @@ class RepoViewActivity: CoreActivity(){
     //param: url of the page to load
     fun loadWebView(url: String){
         arv_webview.loadUrl(url)
+    }
+
+    override fun onBackPressed() {
+        if(arv_webview.canGoBack()){
+            arv_webview.goBack()
+        } else {
+            super.onBackPressed()
+        }
     }
 }
